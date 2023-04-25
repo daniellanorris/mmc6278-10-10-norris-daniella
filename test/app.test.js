@@ -9,7 +9,7 @@ const pokeUtil = require('../util/pokemon')
 const POKEMON_DATA = {
   name: 'gengar',
   sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/94.png',
-  types: [ 'ghost', 'poison' ],
+  types: ['ghost', 'poison'],
   height: '4 feet 11 inches',
   weight: '89 pounds'
 }
@@ -31,7 +31,12 @@ describe('Server Routes', () => {
       expect(document.querySelector('form')).to.exist
     })
     it('should return input element with name attribute of "name"')
-      const name = await request(app)
+    const res = await request(app)
+      .get('/')
+      .expect(200)
+    const { window: { document } } = new JSDOM(res.text)
+    const nameEl = document.querySelector('[name="name"]')
+    expect(nameEl.textContent).to.include(POKEMON_DATA.name)
   })
   describe('GET /pokemon - pokemon info page', () => {
     let pokeStub
