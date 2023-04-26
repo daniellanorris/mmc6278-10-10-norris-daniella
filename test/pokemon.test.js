@@ -52,15 +52,37 @@ describe('pokemon api util', () => {
     it('should call pokemon url with given name', async () => {
       const pokemonData = await getPokemon('banana')
       expect(axiosStub.called).to.be.true
+      //(axiosStub.firstCall.args[0].includes('banana'))
       expect(axiosStub.firstCall.args[0].includes('banana')).to.be.true
     })
+    //checked
     it('should return pokemon name', async () => {
       const pokemonData = await getPokemon('banana')
       expect(pokemonData.name).to.eq(POKEMON_RESPONSE.name)
     })
-    it('should return pokemon official artwork sprite')
-    it('should return pokemon height in feet and inches')
-    it('should return pokemon weight in pounds')
+    //checked
+    it('should return pokemon official artwork sprite', async () => {
+      const pokemonSprite = await getPokemon('banana') 
+      expect(pokemonSprite.sprite).to.eq(POKEMON_RESPONSE.sprites.other["official-artwork"]["front_default"])
+
+    })
+    //checked 
+    it('should return pokemon height in feet and inches', async () => {
+      const pokemonData = await getPokemon('banana')
+      //console.log(pokemonData.height)
+      const newHeight = getFeetAndInches(POKEMON_RESPONSE.height)
+     // console.log(newHeight)
+      expect(pokemonData.height).to.eq(newHeight)
+
+    })
+    //checked
+    it('should return pokemon weight in pounds', async () => {
+      const pokemonData = await getPokemon('banana')
+      const newWeight = getPounds(POKEMON_RESPONSE.weight)
+      expect(pokemonData.weight).to.eq(newWeight)
+
+    })
+    //checked
     it('should throw error if axios errors', async () => {
       axiosStub.restore()
       sinon.stub(axios, 'get').throws(new Error('oh no'))

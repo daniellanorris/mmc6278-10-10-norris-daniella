@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
-    "test:watch": "mocha --watch",
+    "test": "mocha \"**/*.test.js\" --ignore \"node_modules/**\"",
+    "test:watch": "mocha \"**/*.test.js\" --ignore \"node_modules/**\" --watch",
     "start": "node index.js"
   },
   "keywords": [],
